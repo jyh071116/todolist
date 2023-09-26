@@ -4,17 +4,20 @@ import * as S from "./style";
 
 const Todo = ({ date }: { date: string }) => {
   const [val, setVal] = useState("");
+  const todos = getTodo(date);
   return (
     <>
-      {}
+      {todos.map((todo) => (
+        <div>{todo.content}</div>
+      ))}
       <form
         onSubmit={(e) => {
+          e.preventDefault();
           window.localStorage.setItem(
             date,
-            JSON.stringify([...getTodo(date), val]),
+            JSON.stringify([{ id: todos.length, content: val }, ...todos]),
           );
           setVal("");
-          e.preventDefault();
         }}
       >
         <input
