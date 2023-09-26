@@ -1,39 +1,35 @@
 import React, { useState } from "react";
-import getTodo from "../../utils/getTodo";
 import * as S from "./style";
+import useTodo from "../../hooks/useTodo";
 
 const Todo = ({ date }: { date: string }) => {
-  const [val, setVal] = useState("");
-  const todos = getTodo(date);
-
-  const postTodo = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    window.localStorage.setItem(
-      date,
-      JSON.stringify([
-        { id: todos.length, content: val, isChecked: false },
-        ...todos,
-      ]),
-    );
-    setVal("");
-  };
+  const [inputValue, setInputValue] = useState("");
+  const { todos, addTodo, toggleCheck } = useTodo(date);
 
   return (
     <>
       {todos.map((todo) => (
         <>
-          {todo.isChecked ? <div>이미함</div> : <div>안함</div>}
+          <S.CheckButton
+            isChecked={todo.isChecked}
+            onClick={() => toggleCheck(todo.id)}
+          />
           <div>{todo.content}</div>
         </>
       ))}
-      <form onSubmit={(e) => postTodo(e)}>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          addTodo(inputValue);
+          setInputValue("");
+        }}
+      >
         <input
           autoFocus
-          onChange={(e) => setVal(e.currentTarget.value)}
-          value={val}
-          placeholder="할 일을 입력하세요"
+          onChange={(e) => setInputValue(e.currentTarget.value)}
+          value={inputValue}
+          placeholder="Enter를 눌러 제출하세요"
         />
-        <button>제출</button>
       </form>
     </>
   );
