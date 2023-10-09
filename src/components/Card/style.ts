@@ -9,9 +9,21 @@ export const Contaier = styled.div`
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
   background-color: white;
   padding: 2.5% 2%;
+  overflow: scroll;
+`;
+
+export const ContentBox = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 20px;
 `;
 
 export const Day = styled.div`
   margin-top: 1%;
   color: grey;
+`;
+
+export const Button = styled.div`
+  font-size: 25px;
+  cursor: pointer;
 `

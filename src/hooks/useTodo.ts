@@ -1,34 +1,43 @@
-import { useState, useEffect, useCallback } from "react";
-import fetchTodos from "../utils/fetchTodos";
-import ITodo from "../interfaces/Todo.interface";
+import { useState, useEffect } from "react";
+import fetchTodos from "utils/fetchTodos";
+import ITodo from "interfaces/Todo.interface";
 
 const useTodo = (date: string) => {
   const [todos, setTodos] = useState<Array<ITodo>>(() => fetchTodos(date));
 
   useEffect(() => {
-    console.log("저장되었습니다");
+    setTodos([]);
+  }, [date]);
+
+  useEffect(() => {
     window.localStorage.setItem(date, JSON.stringify(todos));
-  }, [date, todos]);
+  }, [todos]);
 
   const addTodo = (content: string) => {
-    console.log("추가되었습니다", {
-      id: todos.length,
-      content,
-      isChecked: false,
-    });
-    setTodos([{ id: todos.length, content, isChecked: false }, ...todos]);
+    const maxId = Math.max(...todos.map((todo) => todo.id));
+    setTodos([
+      {
+        id: maxId !== -Infinity ? maxId + 1 : 0,
+        content,
+        isChecked: false,
+      },
+      ...todos,
+    ]);
   };
 
-  const toggleCheck = (id: number) => {
-    console.log("토글되었습니다", id);
-    setTodos(
-      todos.map((todo) =>
-        todo.id === id ? { ...todo, isChecked: !todo.isChecked } : todo,
-      ),
+  const removeTodo = (contentId: number) => {
+    let updateTodo = todos.filter((todo) => todo.id !== contentId);
+    setTodos(updateTodo);
+  };
+
+  const toggleCheck = (contentId: number) => {
+    let updateTodo = todos.map((todo) =>
+      todo.id === contentId ? { ...todo, isChecked: !todo.isChecked } : todo,
     );
+    setTodos(updateTodo);
   };
 
-  return { todos, addTodo, toggleCheck };
+  return { todos, addTodo, removeTodo, toggleCheck };
 };
 
 export default useTodo;

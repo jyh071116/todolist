@@ -1,6 +1,6 @@
 import React from "react";
 import * as S from "./style";
-import Card from "../../components/Card";
+import Card from "components/Card";
 
 const Main = () => {
 

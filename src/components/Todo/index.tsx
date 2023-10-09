@@ -1,36 +1,52 @@
 import React, { useState } from "react";
 import * as S from "./style";
-import useTodo from "../../hooks/useTodo";
+import useTodo from "hooks/useTodo";
+import TodoItem from "components/TodoItem";
 
 const Todo = ({ date }: { date: string }) => {
   const [inputValue, setInputValue] = useState("");
-  const { todos, addTodo, toggleCheck } = useTodo(date);
+  const { todos, addTodo, removeTodo, toggleCheck } = useTodo(date);
+  const completed = todos.filter((todo) => todo.isChecked === true);
+  console.log("변경됨!")
 
   return (
     <>
-      {todos.map((todo) => (
-        <>
-          <S.CheckButton
-            isChecked={todo.isChecked}
-            onClick={() => toggleCheck(todo.id)}
+      {todos
+        .filter((todo) => todo.isChecked === false)
+        .map((todo) => (
+          <TodoItem
+            key={todo.id}
+            todo={todo}
+            removeTodo={removeTodo}
+            toggleCheck={toggleCheck}
           />
-          <div>{todo.content}</div>
-        </>
-      ))}
-      <form
+        ))}
+      <S.InsertForm
         onSubmit={(e) => {
-          e.preventDefault();
-          addTodo(inputValue);
-          setInputValue("");
+          if (inputValue) {
+            e.preventDefault();
+            addTodo(inputValue);
+            setInputValue("");
+          }
         }}
       >
-        <input
+        <S.Button />
+        <S.Input
           autoFocus
           onChange={(e) => setInputValue(e.currentTarget.value)}
           value={inputValue}
-          placeholder="Enter를 눌러 제출하세요"
+          placeholder="작업 추가"
         />
-      </form>
+      </S.InsertForm>
+      {completed.length !== 0 && <S.Complete>완료됨</S.Complete>}
+      {completed.map((todo) => (
+        <TodoItem
+          key={todo.id}
+          todo={todo}
+          removeTodo={removeTodo}
+          toggleCheck={toggleCheck}
+        />
+      ))}
     </>
   );
 };

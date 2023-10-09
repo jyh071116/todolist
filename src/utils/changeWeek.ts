@@ -1,5 +1,7 @@
 const changeWeek = (numWeek: number) => {
   switch (numWeek) {
+    case 0:
+      return "일요일";
     case 1:
       return "월요일";
     case 2:
@@ -12,10 +14,8 @@ const changeWeek = (numWeek: number) => {
       return "금요일";
     case 6:
       return "토요일";
-    case 7:
-      return "일요일";
     default:
-      return "Error";
+      return "알 수 없는 요일 정보입니다!";
   }
 };
 
