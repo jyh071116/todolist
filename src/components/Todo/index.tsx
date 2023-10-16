@@ -7,7 +7,6 @@ const Todo = ({ date }: { date: string }) => {
   const [inputValue, setInputValue] = useState("");
   const { todos, addTodo, removeTodo, toggleCheck } = useTodo(date);
   const completed = todos.filter((todo) => todo.isChecked === true);
-  console.log("변경됨!")
 
   return (
     <>
@@ -23,8 +22,8 @@ const Todo = ({ date }: { date: string }) => {
         ))}
       <S.InsertForm
         onSubmit={(e) => {
+          e.preventDefault();
           if (inputValue) {
-            e.preventDefault();
             addTodo(inputValue);
             setInputValue("");
           }

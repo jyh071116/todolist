@@ -6,7 +6,7 @@ const useTodo = (date: string) => {
   const [todos, setTodos] = useState<Array<ITodo>>(() => fetchTodos(date));
 
   useEffect(() => {
-    setTodos([]);
+    setTodos(() => fetchTodos(date));
   }, [date]);
 
   useEffect(() => {
