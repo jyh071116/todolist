@@ -1,6 +1,5 @@
 import ITodoItemProps from "interfaces/TodoItemProps.interface";
 import * as S from "./style";
-import { useRef } from "react";
 
 const TodoItem = ({ todo, removeTodo, toggleCheck }: ITodoItemProps) => {
   return (

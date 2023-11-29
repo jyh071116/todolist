@@ -10,16 +10,6 @@ const Todo = ({ date }: { date: string }) => {
 
   return (
     <>
-      {todos
-        .filter((todo) => todo.isChecked === false)
-        .map((todo) => (
-          <TodoItem
-            key={todo.id}
-            todo={todo}
-            removeTodo={removeTodo}
-            toggleCheck={toggleCheck}
-          />
-        ))}
       <S.InsertForm
         onSubmit={(e) => {
           e.preventDefault();
@@ -37,6 +27,16 @@ const Todo = ({ date }: { date: string }) => {
           placeholder="작업 추가"
         />
       </S.InsertForm>
+      {todos
+        .filter((todo) => todo.isChecked === false)
+        .map((todo) => (
+          <TodoItem
+            key={todo.id}
+            todo={todo}
+            removeTodo={removeTodo}
+            toggleCheck={toggleCheck}
+          />
+        ))}
       {completed.length !== 0 && <S.Complete>완료됨</S.Complete>}
       {completed.map((todo) => (
         <TodoItem
