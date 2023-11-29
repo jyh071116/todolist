@@ -14,16 +14,18 @@ export const Contaier = styled.div`
 
 export const ContentBox = styled.div`
   display: flex;
+  justify-content: space-around;
   align-items: center;
   gap: 20px;
 `;
 
 export const Day = styled.div`
-  margin-top: 1%;
+  text-align: center; 
+  margin-bottom: 1%;
   color: grey;
 `;
 
-export const Button = styled.div`
-  font-size: 25px;
+export const Button = styled.img`
+  width: 3%;
   cursor: pointer;
-`
+`;
